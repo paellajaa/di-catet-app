@@ -1,0 +1,261 @@
+/* ═══════════════════════════════════════════════════════════════
+   DI CATET — "Soft Minimalism" Design System v2
+   ═══════════════════════════════════════════════════════════════
+   A calm, eye-friendly banking-app aesthetic.
+
+   Palette:
+     Background    #0F172A  (midnight navy)
+     Surface       #1E293B  (elevated card)
+     Card          #1E293B
+     Sage Green    #86EFAC  (income / positive)
+     Soft Coral    #FCA5A5  (expense / negative)
+     Accent        #818CF8  (indigo, buttons/links)
+     Text Main     #F1F5F9  (slate-100)
+     Text Sub      #94A3B8  (slate-400)
+     Border        rgba(255,255,255,0.06)
+
+   Font:
+     Inter — all weights, one family, consistent.
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import 'tailwindcss';
+
+/* ── Theme Tokens ── */
+@theme {
+  /* Colors */
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-card: #1E293B;
+  --color-income: #86EFAC;
+  --color-expense: #FCA5A5;
+  --color-accent: #818CF8;
+  --color-text-main: #F1F5F9;
+  --color-text-sub: #94A3B8;
+  --color-border: rgba(255, 255, 255, 0.06);
+
+  /* Legacy aliases — keeps other pages functional */
+  --color-obsidian: #0F172A;
+  --color-primary: #818CF8;
+  --color-success: #86EFAC;
+  --color-danger: #FCA5A5;
+  --color-acid: #86EFAC;
+  --color-purple: #FCA5A5;
+  --color-border-thin: rgba(255, 255, 255, 0.06);
+
+  /* Font */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Inter', system-ui, sans-serif;
+
+  /* Radius */
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
+  --radius-soft: 1rem;
+
+  /* Shadows — very subtle, no hard edges */
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-soft-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-soft-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-glow-income: 0 0 40px rgba(134, 239, 172, 0.08);
+  --shadow-glow-expense: 0 0 40px rgba(252, 165, 165, 0.08);
+  --shadow-glow-primary: 0 0 30px rgba(129, 140, 248, 0.1);
+  --shadow-dock: 0 -4px 30px rgba(0, 0, 0, 0.3);
+
+  /* Brutal legacy compat (avoids crashes on pages not yet updated) */
+  --shadow-brutal: none;
+  --shadow-brutal-sm: none;
+  --shadow-brutal-acid: none;
+  --shadow-brutal-purple: none;
+}
+
+
+/* ═══════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════ */
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-text-main font-sans min-h-screen;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* ── Subtle noise texture ──
+     Very faint so it adds depth without distraction */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  ::selection {
+    background: rgba(129, 140, 248, 0.25);
+    color: #F1F5F9;
+  }
+}
+
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════ */
+@layer components {
+
+  /* ── Glass Card ── */
+  .card-glass {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1.5rem;
+  }
+
+  /* ── Solid Card ── */
+  .card-solid {
+    @apply bg-surface rounded-3xl;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* ── Heading: lowercase, relaxed ── */
+  .heading {
+    @apply font-sans font-semibold lowercase tracking-tight;
+  }
+
+  /* ── Number display ── */
+  .num {
+    @apply font-sans font-medium tracking-tight;
+  }
+  .num-bold {
+    @apply font-sans font-semibold tracking-tight;
+  }
+
+  /* ── Primary button ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           font-semibold lowercase text-sm
+           px-5 py-3 rounded-2xl
+           bg-accent text-white
+           hover:brightness-110 active:scale-[0.97]
+           transition-all duration-200;
+  }
+
+  /* ── Ghost button ── */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           font-medium lowercase text-sm
+           px-5 py-3 rounded-2xl
+           bg-white/5 text-text-main
+           border border-white/[0.06]
+           hover:bg-white/[0.08]
+           transition-all duration-200;
+  }
+
+  /* ── Input ── */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-2xl text-sm
+           bg-background text-text-main placeholder-text-sub/50
+           border border-white/[0.06]
+           focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15
+           transition-all duration-200;
+  }
+
+  /* ── Legacy brutalist classes → soft fallback ── */
+  .card-brutal {
+    @apply bg-surface rounded-3xl;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+  }
+  .card-brutal:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-acid {
+    @apply inline-flex items-center justify-center gap-2
+           font-semibold lowercase text-sm
+           px-5 py-3 rounded-2xl
+           bg-accent text-white
+           hover:brightness-110 active:scale-[0.97]
+           transition-all duration-200;
+  }
+
+  .glass {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Indicator dots ── */
+  .dot-income {
+    @apply w-2 h-2 rounded-full bg-income;
+  }
+  .dot-expense {
+    @apply w-2 h-2 rounded-full bg-expense;
+  }
+  /* Legacy dots */
+  .dot-acid { @apply w-2 h-2 rounded-full bg-income; }
+  .dot-purple { @apply w-2 h-2 rounded-full bg-expense; }
+}
+
+
+/* ═══════════════════════════════════════
+   ANIMATIONS — subtle fades only
+   ═══════════════════════════════════════ */
+@layer utilities {
+  .fade-in {
+    animation: fadeIn 0.35s ease-out;
+  }
+  .slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+  .scale-in {
+    animation: scaleIn 0.25s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.03); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(10px) scale(1.02); }
+}
