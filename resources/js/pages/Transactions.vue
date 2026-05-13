@@ -21,35 +21,71 @@
     </header>
 
     <!-- Search & Filter -->
-    <section class="px-4 py-4 lg:px-8">
-      <div class="flex flex-col sm:flex-row gap-3">
-        <div class="relative flex-1">
-          <Search :size="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-sub" />
-          <input
-            id="search-input"
-            v-model="searchQuery"
-            type="text"
-            placeholder="Cari transaksi..."
-            class="w-full pl-10 pr-4 py-2.5 bg-card border border-border-thin rounded-xl text-sm text-text-main placeholder-text-sub/50 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all"
-          />
+    <section class="px-4 py-4 lg:px-8 space-y-4">
+      <!-- Search Bar -->
+      <div class="relative w-full">
+        <Search :size="16" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+        <input
+          id="search-input"
+          v-model="searchQuery"
+          type="text"
+          placeholder="Cari transaksi..."
+          class="w-full pl-10 pr-4 py-3 bg-[#1E293B] border border-[#334155] rounded-2xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#818cf8]/40 focus:border-[#818cf8] transition-all"
+        />
+      </div>
+
+      <!-- Type Filters (Pills) -->
+      <div class="w-full max-w-full overflow-hidden">
+        <div class="flex items-center justify-start gap-2 overflow-x-auto flex-nowrap hide-scrollbar pb-2 pr-10 snap-x snap-mandatory">
+          <button
+            @click="filterType = 'all'"
+            class="filter-pill snap-start"
+            :class="filterType === 'all' ? 'active-all' : ''"
+          >
+            <LayoutGrid :size="14" />
+            <span>Semua Tipe</span>
+          </button>
+          <button
+            @click="filterType = 'income'"
+            class="filter-pill snap-start"
+            :class="filterType === 'income' ? 'active-income' : ''"
+          >
+            <ArrowUpRight :size="14" />
+            <span>Pemasukan</span>
+          </button>
+          <button
+            @click="filterType = 'expense'"
+            class="filter-pill snap-start"
+            :class="filterType === 'expense' ? 'active-expense' : ''"
+          >
+            <ArrowDownLeft :size="14" />
+            <span>Pengeluaran</span>
+          </button>
         </div>
-        <select
-          id="filter-type"
-          v-model="filterType"
-          class="px-4 py-2.5 bg-card border border-border-thin rounded-xl text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 cursor-pointer"
-        >
-          <option value="all">Semua Tipe</option>
-          <option value="income">Pemasukan</option>
-          <option value="expense">Pengeluaran</option>
-        </select>
-        <select
-          id="filter-category"
-          v-model="filterCategory"
-          class="px-4 py-2.5 bg-card border border-border-thin rounded-xl text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 cursor-pointer"
-        >
-          <option value="all">Semua Kategori</option>
-          <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
-        </select>
+      </div>
+
+      <!-- Category Filters (Pills) -->
+      <div class="w-full max-w-full overflow-hidden">
+        <div class="flex items-center justify-start gap-2 overflow-x-auto flex-nowrap hide-scrollbar pb-2 pr-10 snap-x snap-mandatory">
+          <button
+            @click="filterCategory = 'all'"
+            class="filter-pill snap-start"
+            :class="filterCategory === 'all' ? 'active-all' : ''"
+          >
+            <LayoutGrid :size="14" />
+            <span>Semua Kategori</span>
+          </button>
+          <button
+            v-for="cat in categories"
+            :key="cat"
+            @click="filterCategory = cat"
+            class="filter-pill snap-start"
+            :class="filterCategory === cat ? 'active-category' : ''"
+          >
+            <component :is="getCategoryIcon(cat)" :size="14" />
+            <span>{{ cat }}</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -160,7 +196,7 @@
 
 <script setup>
 import { ref, computed, inject, onMounted } from 'vue';
-import { Wallet, User, Search, Trash2, ArrowUpRight, ArrowDownLeft, Utensils, Car, Gamepad2, Briefcase, TrendingUp, Receipt } from 'lucide-vue-next';
+import { Wallet, User, Search, Trash2, ArrowUpRight, ArrowDownLeft, Utensils, Car, Gamepad2, Briefcase, TrendingUp, Receipt, LayoutGrid } from 'lucide-vue-next';
 import { useCurrency } from '../composables/useCurrency';
 
 const { formatRupiah } = useCurrency();
@@ -205,3 +241,67 @@ const handleDelete = async (id) => {
   if (confirm('Yakin ingin menghapus transaksi ini?')) await deleteTransaction(id);
 };
 </script>
+
+<style scoped>
+@reference "../../css/app.css";
+
+/* ── Horizontal Scroll Hiding ── */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Pill Filter Buttons ── */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0 1rem;
+  min-height: 40px;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter-pill:active {
+  transform: scale(0.95);
+}
+
+/* ── Active States ── */
+.active-all {
+  background: rgba(129, 140, 248, 0.15);
+  border-color: #818cf8;
+  color: #818cf8;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.1);
+}
+
+.active-income {
+  background: rgba(134, 239, 172, 0.15);
+  border-color: #86efac;
+  color: #86efac;
+  box-shadow: 0 0 12px rgba(134, 239, 172, 0.1);
+}
+
+.active-expense {
+  background: rgba(253, 164, 175, 0.15);
+  border-color: #fda4af;
+  color: #fda4af;
+  box-shadow: 0 0 12px rgba(253, 164, 175, 0.1);
+}
+
+.active-category {
+  background: rgba(241, 245, 249, 0.1);
+  border-color: rgba(241, 245, 249, 0.25);
+  color: #f1f5f9;
+}
+</style>

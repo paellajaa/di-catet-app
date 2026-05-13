@@ -1,58 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📓 Di Catet - Premium Expense Tracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Di Catet Banner](https://via.placeholder.com/1200x400/0f172a/ffffff?text=Di+Catet+-+Financial+Expense+Tracker)
 
-## About Laravel
+**Di Catet** adalah aplikasi pencatatan keuangan (*Expense Tracker*) modern yang dirancang dengan pendekatan *mobile-first* dan estetika "Midnight Navy" premium. Aplikasi ini membantu pengguna melacak pemasukan dan pengeluaran harian, memberikan visualisasi laporan, serta mengelola kategori transaksi dengan antarmuka yang interaktif (Bento-grid UI).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aplikasi ini dibangun menggunakan perpaduan teknologi tangguh: **Laravel 11+** untuk backend (API & Otentikasi) dan **Vue 3** + **Tailwind CSS 4** untuk frontend (Single Page Application).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Fitur Utama (Features)
 
-## Learning Laravel
+1. **🔒 Autentikasi Google (OAuth 2.0)**
+   Login yang aman, cepat, dan mulus menggunakan akun Google berkat integrasi Laravel Socialite dan Laravel Sanctum (SPA Authentication).
+2. **📱 Mobile-First & Premium UI/UX**
+   Desain responsif yang terasa seperti aplikasi *native* di perangkat seluler dengan Navigasi Bawah (*Bottom Navbar*), efek *glassmorphism*, tipografi modern, dan tema gelap (*Dark Mode*).
+3. **📊 Dashboard Interaktif**
+   Ringkasan komprehensif dari total saldo, pengeluaran bulan ini, dan pemasukan bulan ini dengan tampilan kartu informasi yang memanjakan mata.
+4. **💸 Manajemen Transaksi**
+   Catat pemasukan dan pengeluaran dengan mudah. Menampilkan daftar riwayat transaksi yang dilengkapi dengan fitur filter canggih menggunakan *pill navigation* horizontal.
+5. **🗂️ Custom Category Picker**
+   Pemilihan kategori transaksi menggunakan komponen interaktif *Bento-grid* yang elegan dengan integrasi *Lucide Icons* yang dinamis.
+6. **📈 Laporan Keuangan (Reports)**
+   Analisis pengeluaran dan pemasukan untuk memonitor kesehatan finansial Anda dengan lebih terstruktur.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack (Teknologi yang Digunakan)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Backend:
+- **Framework:** Laravel 11 (PHP 8.3+)
+- **Autentikasi:** Laravel Sanctum (SPA Token Auth) & Laravel Socialite (Google Login)
+- **Database:** SQLite / MySQL (Dapat disesuaikan)
 
-## Agentic Development
+### Frontend:
+- **Framework:** Vue 3 (Composition API)
+- **Routing:** Vue Router 4
+- **Styling:** Tailwind CSS 4 & CSS Vanilla
+- **Ikon:** Lucide Vue Next
+- **Build Tool:** Vite
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
+## 🚀 Cara Instalasi (Getting Started)
+
+Ikuti langkah-langkah di bawah ini untuk menjalankan proyek secara lokal di komputermu.
+
+### Persyaratan Sistem (Prerequisites)
+- **PHP** >= 8.3
+- **Composer** (untuk dependensi PHP)
+- **Node.js** & **NPM** (untuk dependensi frontend)
+- **Database Server** (Opsional jika ingin pakai MySQL. Secara default bisa memakai SQLite)
+
+### Langkah Instalasi (Installation Steps)
+
+**1. Clone Repositori**
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/username/di-catet.git
+cd di-catet
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**2. Install Dependensi Backend (PHP)**
+```bash
+composer install
+```
 
-## Contributing
+**3. Install Dependensi Frontend (Node.js)**
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**4. Konfigurasi Environment (`.env`)**
+Salin file `.env.example` menjadi `.env`.
+```bash
+cp .env.example .env
+```
+Lalu *generate application key*:
+```bash
+php artisan key:generate
+```
 
-## Code of Conduct
+**5. Konfigurasi Database & Auth**
+Buka file `.env`. Secara default Laravel akan menggunakan SQLite dan otomatis membuat file databasenya. Jika Anda ingin menggunakan MySQL, atur *DB_* variabel di file tersebut.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Penting untuk Google Auth:**
+Pastikan menambahkan kredensial OAuth dari Google Cloud Console di file `.env`:
+```env
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:8000/api/auth/google/callback
+```
 
-## Security Vulnerabilities
+**6. Jalankan Migrasi Database**
+```bash
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**7. Jalankan Server Development**
+Proyek ini sudah dikonfigurasi agar Vite dan Laravel berjalan bersamaan hanya dengan satu perintah:
+```bash
+npm run dev
+```
+*(Perintah ini akan menjalankan `php artisan serve`, antrian/queue, serta `vite` secara paralel).*
 
-## License
+Aplikasi sekarang dapat diakses melalui browser di: `http://localhost:8000`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📖 Cara Penggunaan (How to Use)
+
+1. **Akses Aplikasi:** Buka `http://localhost:8000` di browser komputer atau di perangkat seluler Anda.
+2. **Login:** Gunakan tombol "Sign In With Google" pada halaman Login untuk masuk secara aman ke dalam sistem.
+3. **Dashboard:** Setelah berhasil login, Anda berada di halaman utama. Anda bisa melihat ringkasan keuangan dan sisa saldo.
+4. **Tambah Transaksi:** Klik tombol bulat di tengah pada Navigasi Bawah (atau di Dashboard) untuk mencatat aktivitas keuangan baru. 
+   - Pilih jenis (Pemasukan/Pengeluaran).
+   - Masukkan nilai nominal.
+   - Pilih ikon kategori yang relevan melalui *Category Picker*.
+   - Simpan.
+5. **Daftar Transaksi:** Navigasi ke tab **Transactions** (ikon list) untuk meninjau semua pemasukan dan pengeluaran. Geser tombol navigasi kategori di atas (*pill filters*) untuk menyortir data.
+6. **Laporan & Profil:** Gunakan tab **Reports** (ikon grafik) untuk melihat analisis bulanan dan tab **Profile** (ikon orang) untuk melakukan log out.
+
+---
+
+## 📂 Struktur Direktori Penting
+
+Jika Anda ingin berkontribusi atau memodifikasi kode, berikut struktur utamanya:
+- `app/Http/Controllers/`: Logika sistem backend (seperti `TransactionController`, `AuthController`).
+- `routes/api.php` & `routes/web.php`: Titik keluar/masuk URL aplikasi dan API.
+- `resources/js/`: Direktori *source code* utama antarmuka (Vue 3).
+  - `components/`: Komponen UI yang bisa digunakan kembali (`BottomNavbar.vue`, `CategoryPicker.vue`, `TransactionModal.vue`).
+  - `pages/`: Tampilan layar utama (`Dashboard.vue`, `Transactions.vue`, dll).
+- `resources/css/app.css`: Konfigurasi warna premium dan styling khusus tambahan untuk Tailwind.
+
+---
+
+<p align="center"><i>Di Catet - Pencatatan Keuangan Tanpa Ribet</i></p>
